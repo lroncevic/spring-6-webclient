@@ -82,4 +82,18 @@ class BeerClientImplTest {
 
         await().untilTrue(atomicBoolean);
     }
+
+    @Test
+    void getBeerByBeerStyle() {
+
+        AtomicBoolean atomicBoolean = new AtomicBoolean(false);
+
+        client.getBeerByBeerStyle("Pale Ale")
+                .subscribe(dto -> {
+                    System.out.println(dto.toString());
+                    atomicBoolean.set(true);
+                });
+
+        await().untilTrue(atomicBoolean);
+    }
 }
