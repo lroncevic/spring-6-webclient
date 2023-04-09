@@ -20,8 +20,11 @@ class BeerClientImplTest {
 
         AtomicBoolean atomicBoolean = new AtomicBoolean(false);
 
-        client.listBeer().subscribe(System.out::println);
-        atomicBoolean.set(true);
+        client.listBeer().subscribe(response -> {
+            System.out.println(response);
+            atomicBoolean.set(true);
+        });
+
         await().untilTrue(atomicBoolean);
     }
 
@@ -30,8 +33,11 @@ class BeerClientImplTest {
 
         AtomicBoolean atomicBoolean = new AtomicBoolean(false);
 
-        client.listBeerMap().subscribe(System.out::println);
-        atomicBoolean.set(true);
+        client.listBeerMap().subscribe(response -> {
+            System.out.println(response);
+            atomicBoolean.set(true);
+        });
+
         await().untilTrue(atomicBoolean);
     }
 
@@ -40,8 +46,25 @@ class BeerClientImplTest {
 
         AtomicBoolean atomicBoolean = new AtomicBoolean(false);
 
-        client.listBeersJsonNode().subscribe(System.out::println);
-        atomicBoolean.set(true);
+        client.listBeersJsonNode().subscribe(jsonNode -> {
+
+            System.out.println(jsonNode.toPrettyString());
+            atomicBoolean.set(true);
+        });
+
+        await().untilTrue(atomicBoolean);
+    }
+
+    @Test
+    void getBeerDto() {
+
+        AtomicBoolean atomicBoolean = new AtomicBoolean(false);
+
+        client.listBeerDto().subscribe(dto -> {
+            System.out.println(dto.getBeerName());
+            atomicBoolean.set(true);
+        });
+
         await().untilTrue(atomicBoolean);
     }
 }
